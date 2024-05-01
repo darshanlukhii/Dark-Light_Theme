@@ -3,7 +3,7 @@ import lightTheme from './lightTheme';
 import darkTheme from './darkTheme';
 
 const ThemeContext = createContext({
-  theme: lightTheme, // Initial theme
+  theme: darkTheme, // Initial theme
   setTheme: () => {},
   toggleTheme: () => {}, // Add toggleTheme here
 });

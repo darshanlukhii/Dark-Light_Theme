@@ -21,7 +21,7 @@ const Details = () => {
         </View>
         <View style={[styles.detailsContainer, styles.detailsBackground]}>
           <Text style={styles.title}>{product.title}</Text>
-          <Text style={styles.description}>{product.description}</Text>
+          <Text style={styles.description}>🤓{product.description}🤓</Text>
           <View style={styles.priceStockContainer}>
             <Text style={styles.titleText}>Price:</Text>
             <Text style={styles.valueText}>${product.price}</Text>
@@ -62,10 +62,10 @@ const themedStyles = theme =>
       borderRadius: 10,
       padding: 20,
       elevation: 5,
-      shadowColor: theme.shadowColor, // Shadow color for iOS
-      shadowOffset: {width: 0, height: 2}, // Shadow offset for iOS
-      shadowOpacity: 0.25, // Shadow opacity for iOS
-      shadowRadius: 3, // Shadow radius for iOS
+      shadowColor: theme.shadowColor,
+      shadowOffset: {width: 0, height: 2},
+      shadowOpacity: 0.25,
+      shadowRadius: 3,
     },
     detailsBackground: {
       backgroundColor: theme.subCardBGColor,

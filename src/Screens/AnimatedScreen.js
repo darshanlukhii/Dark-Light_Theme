@@ -1,21 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TextInput, FlatList } from 'react-native';
-import { dummy } from '../Component/Dummy';
-import { MotiView } from 'moti';
+import React, {useEffect, useState} from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  FlatList,
+  SafeAreaView,
+} from 'react-native';
+import {dummy} from '../Component/Dummy';
+import {MotiView} from 'moti';
 
 const AnimatedScreen = () => {
   const [search, setSearch] = useState('');
 
-  const filteredData = dummy.filter((item) => {
+  const filteredData = dummy.filter(item => {
     return item.title.toLowerCase().includes(search.toLowerCase());
   });
 
-  const renderItem = ({ item, index }) => (
+  const renderItem = ({item, index}) => (
     <MotiView
-      style={[styles.item, { width: '48%', backgroundColor: index % 4 === 0 ? '#F8BBD0' : '#81D4FA' }]}
-      from={{ opacity: 0, translateY: 50 }}
-      animate={{ opacity: 1, translateY: 0 }}
-      transition={{ delay: 100 + index * 200 }}>
+      style={[
+        styles.item,
+        {
+          width: '48%',
+          backgroundColor: index % 4 === 0 ? '#F8BBD0' : '#81D4FA',
+        },
+      ]}
+      from={{opacity: 0, translateY: 50}}
+      animate={{opacity: 1, translateY: 0}}
+      transition={{delay: 100 + index * 200}}>
       <Text style={styles.title}>{item.title}</Text>
       <Text style={styles.body}>{item.body}</Text>
     </MotiView>
@@ -23,23 +36,25 @@ const AnimatedScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.searchBar}
-        placeholder="Search..."
-        value={search}
-        onChangeText={(text) => {
-          setSearch(text);
-        }}
-      />
-      <FlatList
-        data={filteredData}
-        bounces={false}
-        showsVerticalScrollIndicator={false}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
-        numColumns={2} // Displaying two columns
-        contentContainerStyle={styles.flatListContent} // Added contentContainerStyle to style FlatList
-      />
+      <SafeAreaView>
+        <TextInput
+          style={styles.searchBar}
+          placeholder="Search..."
+          value={search}
+          onChangeText={text => {
+            setSearch(text);
+          }}
+        />
+        <FlatList
+          data={filteredData}
+          bounces={false}
+          showsVerticalScrollIndicator={false}
+          renderItem={renderItem}
+          keyExtractor={item => item.id.toString()}
+          numColumns={2}
+          contentContainerStyle={styles.flatListContent}
+        />
+      </SafeAreaView>
     </View>
   );
 };
@@ -47,7 +62,7 @@ const AnimatedScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#fff',
     padding: 10,
   },
   searchBar: {
@@ -86,8 +101,9 @@ const styles = StyleSheet.create({
     color: '#FFF', // Text color
   },
   flatListContent: {
-    paddingHorizontal: 5, // Added paddingHorizontal to adjust spacing between columns
-    paddingTop: 5, // Added paddingTop for spacing from the top
+    paddingHorizontal: 5,
+    paddingTop: 5,
+    justifyContent: 'space-between',
   },
 });
 

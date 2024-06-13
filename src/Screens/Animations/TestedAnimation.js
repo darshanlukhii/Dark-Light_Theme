@@ -5,6 +5,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
+import CommonBack from '../../Component/CommonBack';
 
 const TestedAnimation = () => {
   const translateX = useSharedValue(0);
@@ -30,6 +31,7 @@ const TestedAnimation = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <CommonBack />
       <View style={{marginTop: 20}} />
       <Button title="Click me" onPress={pressButton1} />
       <Animated.View style={[styles.box, animatedStyles]} />

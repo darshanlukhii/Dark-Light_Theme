@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {View, StyleSheet, SafeAreaView, Button} from 'react-native';
 import Animated, {
@@ -7,6 +8,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import CommonBack from '../../Component/CommonBack';
 
 const WithTiming = () => {
   const defaultAnim = useSharedValue(0);
@@ -31,6 +33,7 @@ const WithTiming = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+     <CommonBack />
       <View style={{marginTop: 20}} />
       <Button title="Click here" onPress={handlePress1} />
       <Animated.View style={[styles?.box, animatedBox]} />

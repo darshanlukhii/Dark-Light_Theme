@@ -77,6 +77,7 @@ import {
   FlatList,
   Dimensions,
   Image,
+  SafeAreaView,
 } from 'react-native';
 import Animated, {
   Easing,
@@ -121,7 +122,7 @@ const FallingWords = () => {
   });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <CommonBack />
       <FlatList
         data={words}
@@ -136,7 +137,7 @@ const FallingWords = () => {
           );
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -144,7 +145,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000',
-    paddingTop: 40
   },
   wordContainer: {
     flex: 1,

@@ -83,7 +83,7 @@
 // export default InterpolateScreen;
 
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, FlatList, SafeAreaView} from 'react-native';
 import Animated, {
   interpolate,
   interpolateColor,
@@ -128,9 +128,9 @@ const ProductCard = ({product}) => {
 
   const handleCardPress = () => {
     if (clicked) {
-      animatedValue.value = withSpring(1);
+      animatedValue.value = withSpring(1,{duration: 1000});
     } else {
-      animatedValue.value = withSpring(0);
+      animatedValue.value = withSpring(0, {duration: 2000});
     }
     setClicked(!clicked);
   };
@@ -139,6 +139,7 @@ const ProductCard = ({product}) => {
     <TouchableOpacity onPress={handleCardPress}>
       <Animated.View style={[styles.card, animatedStyle]}>
         <Animated.Image
+        
           source={product.image}
           style={[styles.image, animatedImages]}
           resizeMode="stretch"
@@ -201,7 +202,7 @@ const InterpolateScreen = () => {
   ];
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <CommonBack />
       <Text style={styles.header}>Painting List</Text>
       <FlatList
@@ -212,7 +213,7 @@ const InterpolateScreen = () => {
         keyExtractor={item => item.id.toString()}
         contentContainerStyle={styles.productList}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -220,7 +221,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
-    paddingTop: 40,
   },
   header: {
     fontSize: 24,

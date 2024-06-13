@@ -1,27 +1,30 @@
-//import liraries
 import {useNavigation} from '@react-navigation/native';
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {View, Text, StyleSheet, Button, TouchableOpacity} from 'react-native';
+import {fontSize, hp, wp} from '../utils/helper';
 
-// create a component
 const CommonBack = () => {
   const {goBack} = useNavigation();
   return (
-    <View style={styles.header}>
-      <Button title="Back" onPress={goBack} />
-    </View>
+    <TouchableOpacity style={styles.header} onPress={goBack}>
+      <Text
+        style={{
+          color: 'blue',
+          paddingVertical: hp(10),
+          fontSize: fontSize(16),
+        }}>
+        Back
+      </Text>
+    </TouchableOpacity>
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
     alignItems: 'center',
     paddingHorizontal: 10,
   },
 });
 
-//make this component available to the app
 export default CommonBack;

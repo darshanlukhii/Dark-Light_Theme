@@ -48,7 +48,7 @@
 // export default WithRepeat;
 
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView} from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -84,7 +84,7 @@ const WithRepeat = () => {
   }));
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <CommonBack />
       <View
         style={{
@@ -102,7 +102,7 @@ const WithRepeat = () => {
         </TouchableOpacity>
         <Animated.View style={[styles.logo, animatedStyle]} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: 40
   },
   title: {
     fontSize: 24,

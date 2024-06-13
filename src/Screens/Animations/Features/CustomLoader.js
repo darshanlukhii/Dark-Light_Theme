@@ -111,6 +111,7 @@ import {
   Text,
   FlatList,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import Animated, {
   Easing,
@@ -167,9 +168,9 @@ const CustomLoader = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {!loading && <CommonBack />}
-      <View style={{flex: 1, justifyContent: 'center', bottom: loading && 50}}>
+      <View style={{flex: 1, justifyContent: 'center'}}>
         {loading ? (
           <LoadingSpinner />
         ) : (
@@ -194,7 +195,7 @@ const CustomLoader = () => {
           </View>
         )}
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -202,7 +203,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f8f9fa',
-    paddingTop: 40,
   },
   content: {
     flex: 1,
@@ -226,7 +226,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
     alignSelf: 'center',
-    marginTop: 50,
   },
   spinnerSegment: {
     position: 'absolute',

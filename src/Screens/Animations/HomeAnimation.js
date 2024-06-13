@@ -15,6 +15,7 @@ const HomeAnimation = () => {
     {label: 'CustomLoader', navigate: 'CustomLoader'},
     {label: 'Button 8', navigate: 'WithSequence'}, // WithSequence
     {label: 'Painting List', navigate: 'interpolate'}, // WithSequence
+    {label: 'AnimatedHeader', navigate: 'AnimatedHeader'}, // WithSequence
   ];
 
   const renderItem = ({item}) => (

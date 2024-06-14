@@ -28,23 +28,27 @@ const MainStackNavigator = ({value}) => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="HomeAnimation" component={HomeAnimation} />
-        <Stack.Screen name="AnimatedHeader" component={AnimatedHeader} />
-        <Stack.Screen name="interpolate" component={InterpolateScreen} />
+
+        <Stack.Screen name="WithRepeat" component={WithRepeat} />
+        <Stack.Screen name="WithTiming" component={WithTiming} />
         <Stack.Screen name="WithSequence" component={WithSequence} />
         <Stack.Screen name="CustomLoader" component={CustomLoader} />
-        <Stack.Screen name="WithRepeat" component={WithRepeat} />
         <Stack.Screen name="FallingWords" component={FallingWords} />
         <Stack.Screen name="CustomTabBar" component={CustomTabBar} />
-        <Stack.Screen name="InitialAnimation" component={InitialAnimation} />
-        <Stack.Screen name="WithTiming" component={WithTiming} />
-        <Stack.Screen name="TestedAnimation" component={TestedAnimation} />
+        <Stack.Screen name="AnimatedHeader" component={AnimatedHeader} />
+        <Stack.Screen name="interpolate" component={InterpolateScreen} />
         <Stack.Screen name="AnimatedScreen" component={AnimatedScreen} />
+        <Stack.Screen name="TestedAnimation" component={TestedAnimation} />
+        <Stack.Screen name="InitialAnimation" component={InitialAnimation} />
+
         <Stack.Screen name="Memo" component={Memo} />
         <Stack.Screen name="WithCallback" component={WithCallback} />
-        <Stack.Screen name="Throttled" component={Throttled} />
+
         <Stack.Screen name="Debounced" component={Debounced} />
-        <Stack.Screen name="Details" component={Details} />
+        <Stack.Screen name="Throttled" component={Throttled} />
+
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Details" component={Details} />
       </Stack.Navigator>
     </NavigationContainer>
   );

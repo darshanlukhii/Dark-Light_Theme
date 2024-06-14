@@ -1,54 +1,43 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {products} from '../../../dummy';
+import {fontSize, hp, isIos, wp} from '../../../utils/helper';
 import Animated, {
   withSpring,
   useSharedValue,
   useAnimatedStyle,
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
-
-import {products} from '../../../dummy';
 import CommonBack from '../../../Component/CommonBack';
-import {fontSize, hp, isIos, wp} from '../../../utils/helper';
 
-const HEADER_HEIGHT = hp(isIos ? 90 : 50);
+const HEADER_HEIGHT = hp(isIos ? 90 : 60);
 
 const AnimatedHeader = () => {
-  const translationY = useSharedValue(0);
-  const scrollingUp = useSharedValue(true);
+  const headerAnimatedValue = useSharedValue(0);
+  const scrollingUp = useSharedValue(false);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
         {
           translateY: withSpring(
-            scrollingUp.value || translationY.value <= 0 ? 0 : -HEADER_HEIGHT,
+            headerAnimatedValue.value <= 0 || scrollingUp.value
+              ? 0
+              : -HEADER_HEIGHT,
             {
               damping: 20,
-              stiffness: 150,
+              stiffness: 130,
             },
           ),
         },
       ],
-      opacity: withSpring(
-        scrollingUp.value ||
-          translationY.value <= HEADER_HEIGHT ||
-          translationY.value <= 0
-          ? 1
-          : 0,
-        {
-          damping: 20,
-          stiffness: 150,
-        },
-      ),
     };
   });
 
   const scrollHandler = useAnimatedScrollHandler(event => {
     const currentY = event.contentOffset.y;
-    scrollingUp.value = currentY < translationY.value;
-    translationY.value = currentY;
+    scrollingUp.value = currentY < headerAnimatedValue.value;
+    headerAnimatedValue.value = currentY;
   });
 
   return (
@@ -58,48 +47,55 @@ const AnimatedHeader = () => {
         <Text style={styles.headerLabel}>Shop Now</Text>
         <View style={{width: wp(50)}} />
       </Animated.View>
-      <Animated.ScrollView
+      <Animated.FlatList
         bounces={false}
+        data={products}
         onScroll={scrollHandler}
-        scrollEventThrottle={16}
-        style={{
-          paddingTop: HEADER_HEIGHT,
+        ListFooterComponent={() => {
+          return <View style={{marginBottom: HEADER_HEIGHT + hp(10)}}/>
         }}
-        showsVerticalScrollIndicator={false}>
-        {products.map(product => (
-          <TouchableOpacity
-            key={product.id}
-            style={styles.productContainer}
-            activeOpacity={0.8}>
-            <Image
-              source={{uri: product.thumbnail}}
-              style={styles.productImage}
-            />
-            <View style={styles.productInfo}>
-              <Text style={styles.productTitle}>{product.title}</Text>
-              <Text style={styles.productBrand}>{product.brand}</Text>
-              <Text style={styles.productDescription} numberOfLines={2}>
-                {product.description}
-              </Text>
-              <View style={styles.priceRow}>
-                <Text style={styles.productPrice}>${product.price}</Text>
-                {product.discountPercentage > 0 && (
-                  <View style={styles.discountBadge}>
-                    <Text style={styles.discountText}>
-                      {product.discountPercentage}% OFF
-                    </Text>
-                  </View>
-                )}
+        style={{flex: 1, paddingVertical: HEADER_HEIGHT}}
+        showsVerticalScrollIndicator={false}
+        renderItem={({item}) => {
+          return (
+            <TouchableOpacity
+              key={item.id}
+              style={styles.productContainer}
+              activeOpacity={0.8}>
+              <Image
+                source={{uri: item.thumbnail}}
+                style={styles.productImage}
+              />
+              <View style={styles.productInfo}>
+                <Text style={styles.productTitle}>{item.title}</Text>
+                <Text style={styles.productBrand}>{item.brand}</Text>
+                <Text style={styles.productDescription} numberOfLines={2}>
+                  {item.description}
+                </Text>
+                <View style={styles.priceRow}>
+                  <Text style={styles.productPrice}>${item.price}</Text>
+                  {item.discountPercentage > 0 && (
+                    <View style={styles.discountBadge}>
+                      <Text style={styles.discountText}>
+                        {item.discountPercentage}% OFF
+                      </Text>
+                    </View>
+                  )}
+                </View>
               </View>
-            </View>
-          </TouchableOpacity>
-        ))}
-      </Animated.ScrollView>
+            </TouchableOpacity>
+          );
+        }}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   headerLabel: {
     color: '#fff',
     fontWeight: '700',
@@ -117,10 +113,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#4CAF50',
     justifyContent: 'space-between',
     paddingTop: hp(isIos ? 30 : 0),
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#F5F5F5',
   },
   productContainer: {
     flexDirection: 'row',

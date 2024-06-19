@@ -16,6 +16,7 @@ const HomeAnimation = () => {
     {label: 'Button 8', navigate: 'WithSequence'}, // WithSequence
     {label: 'Painting List', navigate: 'interpolate'}, // WithSequence
     {label: 'AnimatedHeader', navigate: 'AnimatedHeader'}, // WithSequence
+    {label: 'AnimatedList', navigate: 'AnimatedList'},
   ];
 
   const renderItem = ({item}) => (

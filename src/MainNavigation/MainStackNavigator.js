@@ -20,6 +20,7 @@ import CustomLoader from '../Screens/Animations/Features/CustomLoader';
 import WithSequence from '../Screens/Animations/Features/WithSequence';
 import InterpolateScreen from '../Screens/Animations/Features/InterpolateScreen';
 import AnimatedHeader from '../Screens/Animations/Features/AnimatedHeader';
+import AnimatedList from '../Screens/Animations/Features/AnimatedList';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,7 @@ const MainStackNavigator = ({value}) => {
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="HomeAnimation" component={HomeAnimation} />
 
+        <Stack.Screen name="AnimatedList" component={AnimatedList} />
         <Stack.Screen name="WithRepeat" component={WithRepeat} />
         <Stack.Screen name="WithTiming" component={WithTiming} />
         <Stack.Screen name="WithSequence" component={WithSequence} />

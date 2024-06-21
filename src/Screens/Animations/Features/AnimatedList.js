@@ -8,36 +8,31 @@ import Animated, {
   Extrapolate,
   withSpring,
 } from 'react-native-reanimated';
-import {fontSize, hp} from '../../../utils/helper';
+import {fontSize, hp, wp} from '../../../utils/helper';
 import {products} from '../../../dummy';
 
 const HEIGHT = hp(300);
 const MIN_HEIGHT = hp(1000);
+const MAX_HEIGHT = hp(3000);
 
 const AnimatedList = () => {
-  const scrollY = useSharedValue(0);
-  const flatListHeight = useSharedValue(0);
+  const imageY = useSharedValue(0);
 
   const handleScroll = useAnimatedScrollHandler(event => {
-    flatListHeight.value = event.contentOffset.y;
-    scrollY.value = event.contentOffset.y;
+    imageY.value = event.contentOffset.y;
   });
 
   const headerStyle = useAnimatedStyle(() => {
     return {
-      transform: [
-        {
-          translateY: withSpring(
-            interpolate(
-              scrollY.value,
-              [0, flatListHeight.value >= MIN_HEIGHT],
-              [0, -HEIGHT / 2],
-              Extrapolate.CLAMP,
-            ),
-            {damping: 20, stiffness: 100},
-          ),
-        },
-      ],
+      height: withSpring(
+        interpolate(
+          imageY.value,
+          [0, imageY.value <= MIN_HEIGHT, imageY.value >= MAX_HEIGHT],
+          [HEIGHT, 200, 100],
+          Extrapolate.CLAMP,
+        ),
+        {damping: 20, stiffness: 100},
+      ),
     };
   });
 
@@ -77,13 +72,12 @@ const AnimatedList = () => {
         onScroll={handleScroll}
         scrollEventThrottle={16}
       />
-      <Animated.View style={[styles.headerImage, headerStyle]}>
-        <Image
+      <Animated.View style={[styles.headerImageContainer, headerStyle]}>
+        <Animated.Image
           source={{uri: products[4]?.thumbnail}}
-          style={[styles.headerImage]}
+          style={[styles.headerImage, headerStyle]}
           resizeMode="cover"
         />
-        <View style={styles.extraViewStyle} />
       </Animated.View>
     </View>
   );
@@ -92,14 +86,21 @@ const AnimatedList = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
   },
-  headerImage: {
+  headerImageContainer: {
     height: HEIGHT,
     width: '100%',
     position: 'absolute',
     top: 0,
     zIndex: 1,
+    overflow: 'hidden',
+    borderBottomLeftRadius: wp(20),
+    borderBottomRightRadius: wp(20),
+  },
+  headerImage: {
+    height: '100%',
+    width: '100%',
   },
   scrollViewContent: {
     paddingTop: HEIGHT,
@@ -109,9 +110,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
+    marginHorizontal: 10,
+    marginVertical: 5,
+    borderRadius: 10,
     backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
   },
   productImage: {
     width: 100,
@@ -148,7 +155,7 @@ const styles = StyleSheet.create({
     color: '#4CAF50',
   },
   discountBadge: {
-    backgroundColor: '#FFC107',
+    backgroundColor: '#FF5252',
     borderRadius: 5,
     marginLeft: 10,
     paddingHorizontal: 8,
@@ -157,16 +164,7 @@ const styles = StyleSheet.create({
   discountText: {
     fontSize: fontSize(12),
     fontWeight: 'bold',
-    color: '#333',
-  },
-  extraViewStyle: {
-    bottom: 0,
-    height: 200,
-    width: '100%',
-    position: 'absolute',
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-    backgroundColor: 'white',
+    color: '#fff',
   },
 });
 
